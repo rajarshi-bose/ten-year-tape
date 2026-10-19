@@ -411,7 +411,7 @@ td.tk b{font-weight:400;font-size:12px;letter-spacing:0}
             <input class="field num" id="joinCode" placeholder="CODE" maxlength="5" style="width:96px;text-transform:uppercase" aria-label="Game code">
             <button class="btn" id="joinBtn" type="button">Join</button>
           </div>
-          <p class="note" id="onlineNote">Friends who open this page can join with a four-letter code. Everyone sees the same market at the same moment.</p>
+          <p class="note" id="onlineNote">Checking whether online play is available…</p>
         </div>
         <div id="onlineRoom" hidden>
           <div class="row" style="justify-content:space-between">
@@ -419,6 +419,7 @@ td.tk b{font-weight:400;font-size:12px;letter-spacing:0}
             <button class="btn ghost" id="leaveBtn" type="button">Leave</button>
           </div>
           <div class="peers" id="peerList"></div>
+          <p class="note" id="roomNote"></p>
         </div>
       </div>
       <div class="box" id="setupBox">
@@ -513,7 +514,7 @@ td.tk b{font-weight:400;font-size:12px;letter-spacing:0}
 const D = JSON.parse(document.getElementById('gd').textContent);
 const CAL = D.cal, N = CAL.length;
 // Update log, newest first. Each published update adds a version at the top.
-const CHANGELOG = [{"v": "1.17", "d": "Oct 19, 2026", "n": ["Fixed the payday notice spilling into the sidebar when several players share a device; each player's amount now shows on its own line."]}, {"v": "1.16", "d": "Oct 19, 2026", "n": ["Added this Fixes log and a version number on the home page."]}, {"v": "1.15", "d": "Oct 19, 2026", "n": ["Paychecks now follow a realistic budget: federal tax brackets, Social Security and Medicare, state tax, rent, food, transportation, health care, phone and everyday spending.", "Part of what's left goes to lifestyle spending, so typical savings now match real single earners (about 10–20% of take-home pay instead of over 50%).", "Engineering pay now varies by city, based on BLS mechanical engineer pay data.", "Job offer cards break down take-home pay, rent, food, other costs and monthly savings."]}, {"v": "1.14", "d": "Oct 19, 2026", "n": ["Renamed Buy price to Equ. buy price (your average price per share).", "Added a % of portfolio column to the held assets table.", "Added a portfolio value chart next to the held assets table, comparing net worth with the cash you've put in."]}, {"v": "1.13", "d": "Oct 18, 2026", "n": ["Decades can now start anywhere from 1995 to 2016.", "The company pool grew from 20 to 88, including companies that later went bankrupt or were bought out.", "Failed and acquired companies now delist mid-game and pay out holders at the final price.", "Older decades swap in real funds that existed then: SPY, DVY, Vanguard Equity Income and Rydex Nasdaq-100.", "Company names and tickers are now generated fresh every game.", "About 200 new headlines for 1995–2011."]}, {"v": "1.12", "d": "Oct 18, 2026", "n": ["The job offer banner is now solid bright green."]}, {"v": "1.11", "d": "Oct 18, 2026", "n": ["Slightly larger order ticket and held assets table."]}, {"v": "1.10", "d": "Oct 18, 2026", "n": ["The See more view on the end screen is more compact and fits on one screen.", "Buys show in green and sells in red in the activity list.", "The job offer banner now covers only the scrolling headlines and glows green.", "Job offers now arrive every 1.5–3 years at any point in the year.", "Added a 15-second intro that lists every asset on the board before the market opens."]}, {"v": "1.9", "d": "Oct 18, 2026", "n": ["Bigger, bold green PAYDAY notice that fades out.", "Taller headline bar with larger text.", "Company names and tickers change from game to game."]}, {"v": "1.8", "d": "Oct 18, 2026", "n": ["The payday notice moved next to the buy/sell bar.", "Removed the \"you hold\" text from each chart.", "Fixed charts shrinking as you bought more assets.", "Fixed industry labels being cut off on chart cards."]}, {"v": "1.7", "d": "Oct 18, 2026", "n": ["Job offers now give 20 seconds, with a countdown in the offers window.", "Every job now has a real city.", "Added a cost of living setting that takes rent, food and state tax out of each paycheck.", "Job locations show in the career timeline at the end."]}, {"v": "1.6", "d": "Oct 18, 2026", "n": ["The header is a single row, giving charts more room and showing full company names."]}, {"v": "1.5", "d": "Oct 18, 2026", "n": ["The end screen reveals the real decade and which real company each fake one was.", "Each player has a See more view with their career timeline, final portfolio and trade history."]}, {"v": "1.4", "d": "Oct 18, 2026", "n": ["Company names and tickers are disguised, and the decade is hidden until the end.", "The fiscal year indicator moved next to the progress bar; Pause and End game moved to the sidebar.", "Job offers cover the headline bar with a blinking View offers button.", "Career ladder rebuilt to match real salaries and promotion timing.", "Paydays show as a green amount instead of activity entries."]}, {"v": "1.3", "d": "Oct 18, 2026", "n": ["Headers switched to the Sixtyfour pixel font."]}, {"v": "1.2", "d": "Oct 18, 2026", "n": ["Every player picks a starting engineering job; the game can't start until everyone has one.", "Monthly paychecks, plus promotion and job-change offers every few years.", "Added a sidebar with a leaderboard and an activity feed.", "Added a warning before each new fiscal year."]}, {"v": "1.1", "d": "Oct 18, 2026", "n": ["New all-dark color scheme, with red and green only for gains, losses, buys and sells.", "Prices under $1 show three decimals."]}, {"v": "1.0", "d": "Oct 18, 2026", "n": ["First release: a random real decade of 10 Fortune 500 companies plus VOO, SCHD and QQQ.", "Two-minute market years, live charts, a news tape that runs ahead of price moves, buy/sell bar and holdings ledger.", "Several players per device, plus online play on claude.ai."]}];
+const CHANGELOG = [{"v": "1.18", "d": "Oct 19, 2026", "n": ["Online play now works on the GitHub site: host a game, share the four-letter code, and friends join from their own devices with no account needed.", "Clearer messages when a game code doesn't exist, and a notice within seconds if the host or a player disconnects."]}, {"v": "1.17", "d": "Oct 19, 2026", "n": ["Fixed the payday notice spilling into the sidebar when several players share a device; each player's amount now shows on its own line."]}, {"v": "1.16", "d": "Oct 19, 2026", "n": ["Added this Fixes log and a version number on the home page."]}, {"v": "1.15", "d": "Oct 19, 2026", "n": ["Paychecks now follow a realistic budget: federal tax brackets, Social Security and Medicare, state tax, rent, food, transportation, health care, phone and everyday spending.", "Part of what's left goes to lifestyle spending, so typical savings now match real single earners (about 10–20% of take-home pay instead of over 50%).", "Engineering pay now varies by city, based on BLS mechanical engineer pay data.", "Job offer cards break down take-home pay, rent, food, other costs and monthly savings."]}, {"v": "1.14", "d": "Oct 19, 2026", "n": ["Renamed Buy price to Equ. buy price (your average price per share).", "Added a % of portfolio column to the held assets table.", "Added a portfolio value chart next to the held assets table, comparing net worth with the cash you've put in."]}, {"v": "1.13", "d": "Oct 18, 2026", "n": ["Decades can now start anywhere from 1995 to 2016.", "The company pool grew from 20 to 88, including companies that later went bankrupt or were bought out.", "Failed and acquired companies now delist mid-game and pay out holders at the final price.", "Older decades swap in real funds that existed then: SPY, DVY, Vanguard Equity Income and Rydex Nasdaq-100.", "Company names and tickers are now generated fresh every game.", "About 200 new headlines for 1995–2011."]}, {"v": "1.12", "d": "Oct 18, 2026", "n": ["The job offer banner is now solid bright green."]}, {"v": "1.11", "d": "Oct 18, 2026", "n": ["Slightly larger order ticket and held assets table."]}, {"v": "1.10", "d": "Oct 18, 2026", "n": ["The See more view on the end screen is more compact and fits on one screen.", "Buys show in green and sells in red in the activity list.", "The job offer banner now covers only the scrolling headlines and glows green.", "Job offers now arrive every 1.5–3 years at any point in the year.", "Added a 15-second intro that lists every asset on the board before the market opens."]}, {"v": "1.9", "d": "Oct 18, 2026", "n": ["Bigger, bold green PAYDAY notice that fades out.", "Taller headline bar with larger text.", "Company names and tickers change from game to game."]}, {"v": "1.8", "d": "Oct 18, 2026", "n": ["The payday notice moved next to the buy/sell bar.", "Removed the \"you hold\" text from each chart.", "Fixed charts shrinking as you bought more assets.", "Fixed industry labels being cut off on chart cards."]}, {"v": "1.7", "d": "Oct 18, 2026", "n": ["Job offers now give 20 seconds, with a countdown in the offers window.", "Every job now has a real city.", "Added a cost of living setting that takes rent, food and state tax out of each paycheck.", "Job locations show in the career timeline at the end."]}, {"v": "1.6", "d": "Oct 18, 2026", "n": ["The header is a single row, giving charts more room and showing full company names."]}, {"v": "1.5", "d": "Oct 18, 2026", "n": ["The end screen reveals the real decade and which real company each fake one was.", "Each player has a See more view with their career timeline, final portfolio and trade history."]}, {"v": "1.4", "d": "Oct 18, 2026", "n": ["Company names and tickers are disguised, and the decade is hidden until the end.", "The fiscal year indicator moved next to the progress bar; Pause and End game moved to the sidebar.", "Job offers cover the headline bar with a blinking View offers button.", "Career ladder rebuilt to match real salaries and promotion timing.", "Paydays show as a green amount instead of activity entries."]}, {"v": "1.3", "d": "Oct 18, 2026", "n": ["Headers switched to the Sixtyfour pixel font."]}, {"v": "1.2", "d": "Oct 18, 2026", "n": ["Every player picks a starting engineering job; the game can't start until everyone has one.", "Monthly paychecks, plus promotion and job-change offers every few years.", "Added a sidebar with a leaderboard and an activity feed.", "Added a warning before each new fiscal year."]}, {"v": "1.1", "d": "Oct 18, 2026", "n": ["New all-dark color scheme, with red and green only for gains, losses, buys and sells.", "Prices under $1 show three decimals."]}, {"v": "1.0", "d": "Oct 18, 2026", "n": ["First release: a random real decade of 10 Fortune 500 companies plus VOO, SCHD and QQQ.", "Two-minute market years, live charts, a news tape that runs ahead of price moves, buy/sell bar and holdings ledger.", "Several players per device, plus online play on claude.ai."]}];
 const VERSION = CHANGELOG[0].v;
 const COS = {}; D.cos.forEach(c => { COS[c.id] = c; });
 // series are stored as diff-encoded log prices (1e-4); decode on demand
@@ -1418,32 +1419,122 @@ $('endSheet').addEventListener('click', e => {
 });
 function backToLobby(){ closeCareer(); endState = null; G.on = false; G.ended = false; refreshStart(); $('game').hidden = true; $('lobby').hidden = false; renderLocal(); renderLobbyNet(); pushPresence(); }
 
-/* ---------- online play (room capability; page works fully without it) ---------- */
+/* ---------- online play ----------
+   Two transports behind one small interface (join(code) -> { peers(), presence(obj), onPeers(fn), leave() }):
+   - inside claude.ai: the page's live room;
+   - anywhere else (e.g. GitHub Pages): PeerJS. The host's browser is the hub; guests connect to it
+     directly over WebRTC and the host relays everyone's presence. A free public server only introduces
+     the browsers to each other. The page works fully without either. */
 let roomApi = null, net = null, roomCode = '', lastHostK = '';
+function netMsg(text, bad){
+  $('onlineNote').textContent = text; $('roomNote').textContent = text;
+  if (bad && G.on && !G.ended) say(text, 'err');
+}
 function netAvailable(ok, why){
   $('netState').textContent = ok ? 'available' : 'offline';
-  if (!ok) { $('hostBtn').disabled = true; $('joinBtn').disabled = true; $('joinCode').disabled = true; $('onlineNote').textContent = why || 'Online play works when this page is opened in Claude. Players on this device can still play together.'; }
+  $('hostBtn').disabled = !ok; $('joinBtn').disabled = !ok; $('joinCode').disabled = !ok;
+  if (!ok) $('onlineNote').textContent = why || 'Online play isn\'t available here. Players on this device can still play together.';
+}
+const PEER_LIB = 'https://cdn.jsdelivr.net/npm/peerjs@1.5.4/dist/peerjs.min.js';
+const PEER_PREFIX = 'tentape-v1-';
+function loadPeer(){
+  if (window.Peer) return Promise.resolve(true);
+  return new Promise(res => { const sc = document.createElement('script'); sc.src = PEER_LIB; sc.async = true; sc.onload = () => res(!!window.Peer); sc.onerror = () => res(false); document.head.appendChild(sc); setTimeout(() => res(!!window.Peer), 10000); });
+}
+function peerRoomApi(){
+  const opts = Object.assign({ debug: 0 }, window.TYT_PEER_OPTS || {});
+  return { kind: 'peer', join: (code, asHost) => new Promise((resolve, reject) => {
+    const hostId = PEER_PREFIX + code.toLowerCase();
+    const peer = asHost ? new window.Peer(hostId, opts) : new window.Peer(opts);
+    const conns = new Map();              // host: guestId -> connection
+    let toHost = null;                    // guest: connection to the host
+    let myId = null, mine = {}, others = {}, listeners = [], settled = false, sendT = null, closed = false, hostSeen = 0;
+    const seen = {};                      // host: guestId -> last message time
+    const fire = () => { for (const fn of listeners) { try { fn({}); } catch (e) {} } };
+    const peers = () => [{ peer: myId || 'me', sameTab: true, isMe: true, kind: 'viewer', presence: mine }]
+      .concat(Object.entries(others).map(([id, pr]) => ({ peer: id, sameTab: false, isMe: false, kind: 'viewer', presence: pr })));
+    const broadcast = () => {            // host only: send everyone the full roster, at most ~4 times a second
+      if (sendT) return;
+      sendT = setTimeout(() => { sendT = null; const all = Object.assign({ [myId]: mine }, others);
+        for (const [id, c] of conns) { if (!c.open) continue; const roster = {}; for (const k in all) if (k !== id) roster[k] = all[k]; try { c.send({ t: 'roster', roster }); } catch (e) {} } }, 250);
+    };
+    const clean = pr => (pr && typeof pr === 'object' && !Array.isArray(pr)) ? pr : {};
+    const api = {
+      peers, onPeers: fn => { listeners.push(fn); return () => { listeners = listeners.filter(x => x !== fn); }; },
+      presence: obj => { mine = obj || {}; if (asHost) broadcast(); else if (toHost && toHost.open) { try { toHost.send({ t: 'presence', p: mine }); } catch (e) {} } return Promise.resolve(); },
+      leave: () => { closed = true; clearInterval(beat); try { peer.destroy(); } catch (e) {} },
+    };
+    // heartbeat: the host re-sends the roster every 2 s; either side drops the other after ~8 s of silence
+    const beat = setInterval(() => {
+      if (closed) return;
+      const now = Date.now();
+      if (asHost) {
+        broadcast();
+        let changed = false;
+        for (const id in seen) if (now - seen[id] > 8000) { delete seen[id]; delete others[id]; const c = conns.get(id); if (c) { try { c.close(); } catch (e) {} conns.delete(id); } changed = true; }
+        if (changed) fire();
+      } else if (toHost && hostSeen && now - hostSeen > 8000 && Object.keys(others).length) {
+        others = {}; fire(); netMsg('Lost the connection to the host. Your market keeps running here.', true);
+      } else if (toHost && toHost.open) { try { toHost.send({ t: 'presence', p: mine }); } catch (e) {} }
+    }, 2000);
+    const fail = code => { if (!settled) { settled = true; try { peer.destroy(); } catch (e) {} reject({ code }); } else if (!closed && (code === 'network' || code === 'server-error' || code === 'socket-error')) { /* keep existing direct connections */ } };
+    peer.on('error', e => fail(e && e.type === 'unavailable-id' ? 'code_taken' : e && e.type === 'peer-unavailable' ? 'no_game' : e && e.type));
+    peer.on('open', id => {
+      myId = id;
+      if (asHost) {
+        peer.on('connection', c => {
+          c.on('open', () => { conns.set(c.peer, c); broadcast(); });
+          c.on('data', d => { seen[c.peer] = Date.now(); if (d && d.t === 'presence') { others[c.peer] = clean(d.p); broadcast(); fire(); } });
+          const drop = () => { conns.delete(c.peer); delete others[c.peer]; delete seen[c.peer]; broadcast(); fire(); };
+          c.on('close', drop); c.on('error', drop);
+        });
+        settled = true; resolve(api); fire();
+      } else {
+        toHost = peer.connect(hostId, { reliable: true });
+        const t = setTimeout(() => fail('no_game'), 12000);
+        toHost.on('open', () => { clearTimeout(t); if (!settled) { settled = true; resolve(api); } try { toHost.send({ t: 'presence', p: mine }); } catch (e) {} fire(); });
+        toHost.on('data', d => { hostSeen = Date.now(); if (d && d.t === 'roster' && d.roster && typeof d.roster === 'object') { others = {}; for (const k in d.roster) if (k !== myId) others[k] = clean(d.roster[k]); fire(); } });
+        toHost.on('close', () => { others = {}; fire(); if (!closed) netMsg('Lost the connection to the host. Your market keeps running here.', true); });
+      }
+    });
+  }) };
 }
 (async () => {
   try {
-    if (!window.claude || typeof window.claude.use !== 'function') { netAvailable(false); return; }
-    roomApi = await window.claude.use('room');
-    if (!roomApi) { netAvailable(false); return; }
-    netAvailable(true);
-  } catch (e) { netAvailable(false); }
+    if (window.claude && typeof window.claude.use === 'function') {
+      const r = await window.claude.use('room');
+      if (r) { roomApi = { kind: 'room', join: name => r.join('tyt-' + name.toLowerCase()) }; netAvailable(true); return; }
+      // Inside claude.ai without the live room (e.g. opened from a public link): direct connections are blocked here.
+      netAvailable(false, 'Online play isn\'t available from this link. Play online at rajarshi-bose.github.io/ten-year-tape, or open this page signed in to claude.ai from an invite.');
+      return;
+    }
+  } catch (e) { if (window.claude) { netAvailable(false); return; } }
+  // Not inside claude.ai (or its live room isn't available): use direct browser-to-browser play.
+  const ok = await loadPeer();
+  if (!ok) { netAvailable(false, 'Online play needs an internet connection. Players on this device can still play together.'); return; }
+  roomApi = peerRoomApi(); netAvailable(true);
+  $('onlineNote').textContent = 'Host a game and share the four-letter code, or join a friend\'s game. Everyone sees the same market at the same moment.';
 })();
 function makeCode(){ const A = 'ABCDEFGHJKMNPQRSTUVWXYZ'; let s = ''; for (let i = 0; i < 4; i++) s += A[Math.floor(Math.random()*A.length)]; return s; }
-async function enterRoom(code, asHost){
+async function enterRoom(code, asHost, tries){
   if (!roomApi) return;
+  $('onlineNote').textContent = asHost ? 'Opening a game…' : `Joining ${code}…`;
+  $('hostBtn').disabled = true; $('joinBtn').disabled = true;
   try {
-    net = await roomApi.join('tyt-' + code.toLowerCase());
+    net = await roomApi.join(code, asHost);
     roomCode = code; role = asHost ? 'host' : 'guest';
     net.onPeers(() => { renderLobbyNet(); followHost(); mergeRemote(); refreshStart(); if (endState && G.ended && !$('endScreen').hidden && endState.view === 'results') renderResults(); });
     renderLobbyNet(); pushPresence();
+    netMsg(asHost ? 'Share this code with your friends. They pick a job, type the code and press Join.' : `Joined game ${code}. Waiting for the host to start.`);
   } catch (e) {
     net = null; role = 'solo';
-    $('onlineNote').textContent = e && e.code === 'limit_reached' ? 'The game server is busy right now. Try again in a moment.' : 'Couldn\'t open that game. Check the code and try again.';
-  }
+    if (e && e.code === 'code_taken' && asHost && (tries || 0) < 3) return enterRoom(makeCode(), true, (tries || 0) + 1);
+    $('onlineNote').textContent = e && e.code === 'no_game' ? `No game found with code ${code}. Check the code with your host, and make sure their game page is still open.`
+      : e && e.code === 'limit_reached' ? 'The game server is busy right now. Try again in a moment.'
+      : e && (e.code === 'network' || e.code === 'server-error' || e.code === 'socket-error') ? 'Couldn\'t reach the matchmaking server. Check your connection and try again.'
+      : e && e.code === 'browser-incompatible' ? 'This browser can\'t do online play. Try a recent Chrome, Edge, Firefox or Safari.'
+      : 'Couldn\'t open that game. Check the code and try again.';
+  } finally { $('hostBtn').disabled = !roomApi; $('joinBtn').disabled = !roomApi; }
 }
 function leaveRoom(){ if (net) { try { net.leave(); } catch(e){} } net = null; role = 'solo'; roomCode = ''; hostT = null; lastHostK = ''; renderLobbyNet(); }
 $('hostBtn').addEventListener('click', () => enterRoom(makeCode(), true));

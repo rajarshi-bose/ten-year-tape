@@ -4,7 +4,7 @@
 
 **A stock market game that replays a secret, real decade of market history in about 20 minutes.**
 
-[**▶ Play in your browser**](https://rajarshi-bose.github.io/ten-year-tape/) · No install, no account · Version 1.17
+[**▶ Play in your browser**](https://rajarshi-bose.github.io/ten-year-tape/) · No install, no account · Version 1.18
 
 ![Ten-Year Tape gameplay: ten disguised companies and three index funds trading live, with a news tape, order ticket, holdings and leaderboard](docs/gameplay.png)
 
@@ -53,6 +53,7 @@ At the closing bell the game reveals the decade and the real company behind ever
 - An optional cost-of-living mode with real tax brackets, Social Security and Medicare, state tax, local rent and food, everyday costs and lifestyle spending. Typical savings land around 10–20% of take-home pay, close to what real single earners save.
 
 **Built for playing with friends**
+- Online multiplayer: one person hosts and shares a four-letter code, friends join from their own devices, and everyone trades the same market in sync.
 - Up to six players on one device, switching turns from the order ticket.
 - A live leaderboard with every player's net worth, job and salary, plus an activity feed of trades and career moves.
 - A portfolio value chart, holdings table with average cost and % of portfolio, and a full end-of-game breakdown of each player's career and trades.
@@ -64,7 +65,14 @@ At the closing bell the game reveals the decade and the real company behind ever
 - **Settings:** starting cash ($10k, $25k or $100k), year length (1, 2 or 3 minutes) and cost of living on or off.
 - **Keyboard:** **B** buy, **S** sell, **P** pause, **Esc** closes windows.
 
-> Online play between separate devices currently works only in the claude.ai version of the game. On this site, several players can share one device.
+### Playing online with friends
+
+1. Everyone opens the game link and picks a name and a starting job.
+2. One person clicks **Host a game** and shares the four-letter code.
+3. Everyone else types the code and clicks **Join**.
+4. When everyone has a job, the host rings the opening bell.
+
+No accounts are needed. Players connect directly browser-to-browser ([PeerJS](https://peerjs.com/) / WebRTC), with the host's browser keeping everyone in sync, so **the host should keep their tab open** for the whole game. Some strict school or office networks block these direct connections; if a friend can't join, try a phone hotspot or home Wi-Fi.
 
 ## Data and sources
 
@@ -80,7 +88,7 @@ Headlines are written summaries of real events, with names and identifying detai
 
 ## Under the hood
 
-- One self-contained HTML file (about 2.7 MB) with no frameworks. Charts are drawn on `<canvas>`, and the only outside resource is fonts from Google Fonts.
+- One self-contained HTML file (about 2.7 MB) with no frameworks. Charts are drawn on `<canvas>`. The only outside resources are fonts from Google Fonts and, for online play, the PeerJS library and its free public matchmaking server.
 - Thirty years of daily prices for 95 assets are compressed into the file and decoded on load.
 - Fonts: [Sixtyfour](https://fonts.google.com/specimen/Sixtyfour) for headers, IBM Plex Sans and IBM Plex Mono for everything else.
 
