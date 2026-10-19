@@ -4,7 +4,7 @@
 
 **A stock market game that replays a secret, real decade of market history in about 20 minutes.**
 
-[**▶ Play in your browser**](https://rajarshi-bose.github.io/ten-year-tape/) · No install, no account · Version 1.20
+[**▶ Play in your browser**](https://rajarshi-bose.github.io/ten-year-tape/) · No install, no account · Version 1.21
 
 ![Ten-Year Tape gameplay: ten disguised companies and three index funds trading live, with a news tape, order ticket, holdings and leaderboard](docs/gameplay.png)
 
@@ -72,7 +72,7 @@ At the closing bell the game reveals the decade and the real company behind ever
 3. Everyone else types the code and clicks **Join**.
 4. When everyone has a job, the host rings the opening bell.
 
-No accounts are needed. Players connect directly browser-to-browser ([PeerJS](https://peerjs.com/) / WebRTC), with the host's browser keeping everyone in sync, so **the host should keep their tab open** for the whole game. Some strict school or office networks block these direct connections; if a friend can't join, try a phone hotspot or home Wi-Fi.
+No accounts are needed. Game rooms run through a small [Firebase Realtime Database](https://firebase.google.com/docs/database), which uses ordinary secure web traffic, so it works on campus and office Wi-Fi. The host's game sets the clock for everyone, so **the host should keep their tab open** for the whole game.
 
 ## Data and sources
 
@@ -88,7 +88,7 @@ Headlines are written summaries of real events, with names and identifying detai
 
 ## Under the hood
 
-- One self-contained HTML file (about 2.7 MB) with no frameworks. Charts are drawn on `<canvas>`. The only outside resources are fonts from Google Fonts and, for online play, the PeerJS library and its free public matchmaking server.
+- One self-contained HTML file (about 2.7 MB) with no frameworks. Charts are drawn on `<canvas>`. The only outside resources are fonts from Google Fonts and, for online play, the Firebase SDK (with [PeerJS](https://peerjs.com/) as a fallback).
 - Thirty years of daily prices for 95 assets are compressed into the file and decoded on load.
 - Fonts: [Sixtyfour](https://fonts.google.com/specimen/Sixtyfour) for headers, IBM Plex Sans and IBM Plex Mono for everything else.
 
