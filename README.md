@@ -4,7 +4,7 @@
 
 **A stock market game that replays a secret, real decade of market history in about 20 minutes.**
 
-[**▶ Play in your browser**](https://rajarshi-bose.github.io/ten-year-tape/) · No install, no account · Version 1.33
+[**▶ Play in your browser**](https://rajarshi-bose.github.io/ten-year-tape/) · No install, no account · Version 1.34
 
 ![Ten-Year Tape gameplay: ten disguised companies and three index funds trading live, with a news tape, order ticket, holdings and leaderboard](docs/gameplay.png)
 
